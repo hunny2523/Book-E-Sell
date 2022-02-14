@@ -1,0 +1,19 @@
+a{
+    color: black;
+  }
+  
+  .button{
+    width: 129px;
+    height: 40px;
+  }
+  
+  .breadcrumb {
+    justify-content: center;
+    background:none;
+  }
+  .table td{
+    vertical-align: middle;
+  }
+ 
+
+  
