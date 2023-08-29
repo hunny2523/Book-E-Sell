@@ -1,5 +1,35 @@
 import { Button, Form, FormGroup, Input, Label ,Breadcrumb,BreadcrumbItem} from 'reactstrap';
+import React,{useState} from 'react';
+import {Link,useNavigate} from "react-router-dom";
+import axios from 'axios';
 function Login() {
+  
+    const [user,setRegisterUser]= useState({
+       
+        email:"",
+        password:"",
+     
+    })
+
+    const handleChange=(evt)=>{
+        const {name,value}=evt.target;
+        setRegisterUser({
+            ...user,
+            [name]:value
+        })
+    }
+    const navigate=useNavigate();
+    const login=()=>{
+        const {email,password}=user;
+        if(email&& password){
+            axios.post("http://localhost:5000/login",user)
+            .then(res=>{alert(res.data.message)
+            navigate("/product")});
+        }
+        else{
+            alert("invalid input");
+        }
+    }
     return (
         <div className="container">
              <Breadcrumb className="mx-auto">
@@ -19,7 +49,7 @@ function Login() {
                         <li>Save multiple shipping address</li>
                         <li>View and track orders and more</li>
                     </ul>
-                    <Button color="danger mt-md-5 mt-2 mb-4 mb-md-0">Create an Account</Button>
+                    <Link to="/register"><Button color="danger mt-md-5 mt-2 mb-4 mb-md-0">Create an Account</Button></Link>
                 </div>
                 <div className="col-md-6 col-12 ">
                     <h4>Registered Customers</h4>
@@ -28,14 +58,14 @@ function Login() {
                     <Form>
                         <FormGroup>
                             <Label htmlFor="email">Email Address</Label>
-                            <Input type="email" name="email" />
+                            <Input type="email" name="email" value={user.email}  onChange={handleChange}/>
                         </FormGroup>
                         <FormGroup>
                             <Label htmlFor="password">Password</Label>
-                            <Input type="password" name="password" />
+                            <Input type="password" name="password" value={user.password} onChange={handleChange}/>
                         </FormGroup>
                         <FormGroup>
-                            <Button  color="danger">
+                            <Button onClick={login}  color="danger">
                                 Login
                             </Button>
                         </FormGroup>
